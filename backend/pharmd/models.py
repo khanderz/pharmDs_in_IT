@@ -53,18 +53,57 @@ class Pharmacy(models.Model):
         return f'<pharmacy_id={self.pharmacy_id} pharmacy_name={self.pharmacy_name} pharmacy_type={self.pharmacy_type} >' 
 
 class Digital_Health(models.Model):
+    MENTAL_HEALTH = 'MH'
+    GENETICS = 'G'
+    PROVIDER_DIRECTORIES_AND_CARE_NAVIGATION = 'PDACN'
+    HYBRID_VIRTUAL_INPERSON_CARE = 'HVIC'
+    DIGITAL_THERAPEUTICS = 'DT'
+    BILLING_AND_PAYMENTS = 'BAP'
+    APP_DEPLOYMENT = 'AD'
+    SCREENING_MONITORING_DIAGNOSTICS = 'SMD'
+    DATA_INTEGRATION_ANALYTICS = 'DIA'
+    CLINICAL_INTELLIGENCE = 'CI'
+    HOME_HEALTH_TECH = 'HHT'
+    VIRTUAL_CARE = 'VC'
+    PATIENT_ENGAGEMENT = 'PE'
+    CARE_COORDINATION_COLLABORATION = 'CCC'
+    WORKFLOW_DIGITIZATION_AND_AUTOMATION = 'WDA'
+    COMPUTER_AIDED_IMAGING = 'CAI'
+    CLINICAL_TRIALS = 'CT'
+    DIGITAL_HEALTH_TYPES = [
+        (MENTAL_HEALTH, 'Mental Health'),
+        (GENETICS, 'Genetics'),
+        (PROVIDER_DIRECTORIES_AND_CARE_NAVIGATION, 'Provider Directories & Care Navigation'),
+        (HYBRID_VIRTUAL_INPERSON_CARE, 'Hybrid Virtual In-Person Care'),
+        (DIGITAL_THERAPEUTICS, 'Digital Therapeutics'),
+        (BILLING_AND_PAYMENTS, 'Billing & Payments'),
+        (APP_DEPLOYMENT, 'App Deployment'),
+        (SCREENING_MONITORING_DIAGNOSTICS, 'Screening, Monitoring, Diagnostics'),
+        (DATA_INTEGRATION_ANALYTICS, 'Data Integration & Analytics'),
+        (CLINICAL_INTELLIGENCE, 'Clinical Intelligence'),
+        (HOME_HEALTH_TECH, 'Home Health Tech'),
+        (VIRTUAL_CARE, 'Virtual Care'),
+        (PATIENT_ENGAGEMENT, 'Patient Engagement'),
+        (CARE_COORDINATION_COLLABORATION, 'Care Coordination & Collaboration'),
+        (WORKFLOW_DIGITIZATION_AND_AUTOMATION, 'Workflow Digitization & Automation'),
+        (COMPUTER_AIDED_IMAGING, 'Computer-Aided Imaging'),
+        (CLINICAL_TRIALS, 'Clinical Trials'),
+    ]
+
     digital_health_id = models.IntegerField(primary_key=True)
     digital_health_name = models.CharField(max_length=100)
-    digital_health_type = models.CharField(max_length=100)
+    digital_health_type = models.CharField(max_length=100, choices=DIGITAL_HEALTH_TYPES)
     
     def __str__(self):
-        return f'<digital_health_id={self.digital_health_id} digital_health_name={self.digital_health_name}>'
+        return f'<digital_health_id={self.digital_health_id} digital_health_name={self.digital_health_name} digital_health_type={self.digital_health_type} >'
 
 class Virtual_Pharmacies(models.Model):
     virtual_pharmacy_id = models.IntegerField(primary_key=True)
     virtual_pharmacy_name = models.CharField(max_length=100)
     virtual_pharmacy_logo = models.TextField()
     virtual_pharmacy_url = models.TextField()
+    virtual_pharmacy_description = models.TextField()
+    
     
     def __str__(self):
         return f'<virtual_pharmacy_id={self.virtual_pharmacy_id} virtual_pharmacy_name={self.virtual_pharmacy_name}>'
