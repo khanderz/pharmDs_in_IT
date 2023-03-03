@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import pharmd
+from .models import Company, Pharmacy, Digital_Health, Virtual_Pharmacies
 
 class CompanyAdmin(admin.ModelAdmin):
     company_display = ('company name', "company active")
