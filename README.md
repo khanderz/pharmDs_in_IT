@@ -1,1 +1,1 @@
-
+Tech Stack: Python, Django, Javascript, HTML, CSS
