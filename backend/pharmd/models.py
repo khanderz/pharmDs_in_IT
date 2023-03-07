@@ -1,6 +1,8 @@
 from django.db import models
 
-# Create your models here.
+
+
+# one to many
 class Company(models.Model):
     PHARMACY = 'PH'
     DIGITAL_HEALTH = 'DH'
@@ -10,13 +12,14 @@ class Company(models.Model):
     ]
 
     company_id = models.IntegerField(primary_key=True)
-    company_name = models.CharField(max_length=100)
+    company_name = models.CharField(max_length=100, unique=True, default="Company Name")
     company_active = models.BooleanField(default=True)
-    company_type = models.CharField(max_length=100, choices=COMPANY_TYPES)
+    company_type = models.CharField(max_length=100, choices=COMPANY_TYPES, default=DIGITAL_HEALTH)
     
     def __str__(self):
         return f'<company_id={self.company_id} company_name={self.company_name} company_active={self.company_active} company_type={self.company_type} >'
 
+# one to many
 class Pharmacy(models.Model):
     VIRTUAL_PHARMACY = 'VP'
     DIGITAL_THERAPEUTICS = 'DT'
@@ -45,13 +48,17 @@ class Pharmacy(models.Model):
         (PHARMACY_MEDIA, 'Pharmacy Media'),
     ]
 
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
     pharmacy_id = models.IntegerField(primary_key=True)
-    pharmacy_name = models.CharField(max_length=100)
     pharmacy_type = models.CharField(max_length=100, choices=PHARMACY_TYPES)
+    pharmacy_logo = models.TextField(default=" ")
+    pharmacy_url = models.URLField(default=" ")
+    pharmacy_description = models.TextField(default=" ")
     
     def __str__(self):
-        return f'<pharmacy_id={self.pharmacy_id} pharmacy_name={self.pharmacy_name} pharmacy_type={self.pharmacy_type} >' 
+        return f'<pharmacy_id={self.pharmacy_id} pharmacy_name={self.company.company_name} pharmacy_type={self.pharmacy_type} >' 
 
+# one to many
 class Digital_Health(models.Model):
     MENTAL_HEALTH = 'MH'
     GENETICS = 'G'
@@ -90,20 +97,12 @@ class Digital_Health(models.Model):
         (CLINICAL_TRIALS, 'Clinical Trials'),
     ]
 
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
     digital_health_id = models.IntegerField(primary_key=True)
-    digital_health_name = models.CharField(max_length=100)
     digital_health_type = models.CharField(max_length=100, choices=DIGITAL_HEALTH_TYPES)
-    
-    def __str__(self):
-        return f'<digital_health_id={self.digital_health_id} digital_health_name={self.digital_health_name} digital_health_type={self.digital_health_type} >'
+    digital_health_logo = models.TextField(default=" ")
+    digital_health_url = models.URLField(default=" ")
+    digital_health_description = models.TextField(default=" ")
 
-class Virtual_Pharmacies(models.Model):
-    virtual_pharmacy_id = models.IntegerField(primary_key=True)
-    virtual_pharmacy_name = models.CharField(max_length=100)
-    virtual_pharmacy_logo = models.TextField()
-    virtual_pharmacy_url = models.TextField()
-    virtual_pharmacy_description = models.TextField()
-    
-    
     def __str__(self):
-        return f'<virtual_pharmacy_id={self.virtual_pharmacy_id} virtual_pharmacy_name={self.virtual_pharmacy_name}>'
+        return f'<digital_health_id={self.digital_health_id} digital_health_name={self.company.company_name} digital_health_type={self.digital_health_type} >'
